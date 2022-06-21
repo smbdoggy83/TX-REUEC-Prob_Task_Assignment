@@ -8,15 +8,15 @@ numberOfDevices = 10;
 
 % Randomly generated mean from 10 -> 100 for reach deivce(Uniform Distro)
 minMean = 10; maxMean = 100;
-meanList = (maxMean - minMean) .* rand(numberOfDevices,1) + minMean
+meanList = randi([minMean, maxMean], numberOfDevices,1)
 
 % Randomly generated std -5 -> 5 for reach deivce(Uniform Distro)
 minStd = -5; maxStd = 5;
-stdList = (maxStd - minStd) .* rand(numberOfDevices,1) + minStd
+stdList = randi([minStd,maxStd], numberOfDevices,1)
 
 % Randomly generated work 100 -> 200 for each device (Uniform Distro)
 minWork = 100; maxWork = 200;
-workList = (maxWork - minWork) .* rand(numberOfDevices,1) + minWork;
+workList = randi([minWork, maxWork ],numberOfDevices,1)
 
 % Randomly generated delay from above generated variables (Normal Distro)
 delayList = randn(numberOfDevices, 1)
