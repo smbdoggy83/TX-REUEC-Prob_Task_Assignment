@@ -32,22 +32,21 @@ end
 disp(delayList)
 
 %find all combinations
-combos = FindAll(workRequired, workList);
+combos = FindAll(workRequired, workList)
 
 %find best delay
 for i = 1:numel(combos)
-    for j = 1:numel(combos{i})
+    for j = 1:numel(combos(i))
         holder = find(workList == combos{i}(j));
         delay = delay + delayList(holder);
     end
     if delay<minDelay
         minDelay = delay;
         position = i;
-        delay = 0;
     end
 end
-display(combos{position})
-output = [minDelay];
+
+output = ['The minimum delay is', minDelay, 'their device numbers are', indexList]
 disp(output)
 
 %%
