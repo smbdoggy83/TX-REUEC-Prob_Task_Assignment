@@ -42,9 +42,9 @@ for i = 1:numel(combos)
     end
     if delay<minDelay
         minDelay = delay;
-        position = i;
-        delay = 0;
+        position = i
     end
+    delay = 0;
 end
 display(combos{position})
 output = [minDelay];
