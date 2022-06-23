@@ -67,18 +67,18 @@ disp(min(output)) % Posiblility of duplicates, take the lower value
 % workRequired
 
 function Combinations = FindAll(workRequired, workList)
-Combinations = {};
-for i = 1:numel(workList)
-    findCombo(workList(i), workList(i+1:length(workList)))
-end
-function findCombo(current, rest)
-
-if sum(current) < workRequired
-    for j = 1:numel(rest)
-        findCombo([current,rest(j)], rest(j+1:end))
+    Combinations = {};
+    for i = 1:numel(workList)
+        findCombo(workList(i), workList(i+1:length(workList)))
     end
-else
-    Combinations{end+1} = current;
-end
-end
+
+    function findCombo(current, rest)
+        if sum(current) < workRequired
+            for j = 1:numel(rest)
+                findCombo([current,rest(j)], rest(j+1:end))
+            end
+        else
+            Combinations{end+1} = current;
+        end
+    end
 end
