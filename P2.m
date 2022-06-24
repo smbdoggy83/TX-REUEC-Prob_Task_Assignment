@@ -1,4 +1,13 @@
 function [muTotal, A, sigmaTotal] = P2(n, W, w)
+%% Represents equation P1
+% Inputs: 
+% ~ n: N edge devices
+% ~ W: Total amount of work needed to meet or exceed. 
+% ~ w (wi): Work accomplished per device. Ex: w[2] = work done by device 2
+% ~ d (di): Network delays per device. Ex: d[2] = network delay for device 2
+% Outputs:
+% ~ muTotal: Overall average of minimal solution
+% ~ 
 
 %A = 1:10;
 %B = 2:11;

@@ -1,20 +1,19 @@
-function [D, P] = P1(n, W, w) 
+function D = P1(n, W, w, d) 
 
 %% Represents equation P1
 % Inputs: 
 % ~ n: N edge devices
 % ~ W: Total amount of work needed to meet or exceed. 
-% ~ w: Work accomplished per device. Ex: w[2] = work done by device 2
+% ~ w (wi): Work accomplished per device. Ex: w[2] = work done by device 2
+% ~ d (di): Network delays per device. Ex: d[2] = network delay for device 2
+% Outputs:
+% ~ x (xi): Chosen factor per device (1 = chosen, 2 = unchosen).  The paper refers to this as "vector X". Ex: d[2] = 1 --> device 2 was chosen.
 
 dist = normpdf([10:1:100], mu, sigma);
-d = []; % Network delays per device. Ex: d[2] = network delay for device 2
-x = [1 1 0 1 0 0 1 1 1 0]; % Chosen factor per device (1 = chosen, 2 = unchosen). Ex: d[2] = 1 
-        % --> device 2 was chosen. The paper refers to this as "vector X"
-% w defined as parameter
 
 Dvals = []; % Stores all pcalculated D values. The smallest one will be returned at the end
 
-for j = 1:100 % 100 is arbitrary til we figure out what it should be
+for j = 1:100 % 100 is arbitrary, should be some set of combos (brute force used all combos)
 
     % minimize D such that
     
