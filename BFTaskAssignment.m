@@ -1,6 +1,7 @@
 % Brute Force Simulation Task Assignment on Edge Computing, this simulation
 % will serve as a baseline to compare FMS to.
 %% 
+for loop = 10:2:20
 % We will test number of devices from 10 -> 20 in increments of 2
 numberOfDevices = 20;
 % Minimum work requirement defined by user
@@ -43,17 +44,20 @@ combos = FindAll(workRequired, workList);
 for i = 1:numel(combos)
     for j = 1:numel(combos{i})
         holder = find(workList == combos{i}(j));
-        delay = delay + delayList(holder);
+        delay = delay + min(delayList(holder(1:end)));
     end
-    if delay<minDelay
+    if delay(1:end)< min(minDelay)
         minDelay = delay;
         position = i;
     end
     delay = 0;
 end
+disp("-------------" + loop + " Devices----------------------------")
 disp(combos{position})
 output = minDelay;
-disp(min(output)) % Posiblility of duplicates, take the lower value 
+disp("Min Delay: " + min(output)) % Posiblility of duplicates, take the lower value 
+disp("---------------------------------------------------")
+end
 
 
 %%
