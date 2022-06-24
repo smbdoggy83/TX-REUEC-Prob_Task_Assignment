@@ -1,4 +1,4 @@
-function [muTotal, A, sigmaTotal] = P2(n, W, w)
+function [muTotal, A, sigmaTotal] = P3(n, W, w)
 
 %A = 1:10;
 %B = 2:11;
