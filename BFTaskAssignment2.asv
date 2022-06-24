@@ -37,12 +37,14 @@ end
 % Displaying our list of normally distrubuted values
 %disp(delayList)
 
-AllX = dec2bin(0:2^numberOfDevices-1)' - '0';
+
 
 % WIP: loop to iterate through chosenList (xi) as binary array
-for i = 0:(numberOfDevices^2)
+for i = 0:(numberOfDevices - 1)
     out = bitand(i, 2.^(7:-1:0)) > 0
 
+
+    
     chosenList = 3;
 end
 

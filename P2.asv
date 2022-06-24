@@ -1,11 +1,11 @@
-function [muTotal, A, sigmaTotal] = P2(n, W, w, x)
+function [muTotal, A, sigmaTotal] = P2(n, W, w)
 %% Represents equation P1
 % Inputs: 
 % ~ n: N edge devices
 % ~ W: Total amount of work needed to meet or exceed. 
 % ~ w (wi): Work accomplished per device. Ex: w[2] = work done by device 2
 % ~ d (di): Network delays per device. Ex: d[2] = network delay for device 2
-%% TODO: in order to run this by several algorithms, define what x's to go through. for example, brute force will send all possible combos of x. main algorithm uses several algorithms to reduce the search space and send maybe 3 specific combos of x. etc. 
+%% NEED: in order to run this by several algorithms, define what x's to do. for example, brute force will send all possible combos of x. main algorithm uses several algorithms to reduce the search space and send
 % Outputs:
 % ~ muTotal: Overall average of minimal solution
 % ~ 
@@ -18,7 +18,7 @@ function [muTotal, A, sigmaTotal] = P2(n, W, w, x)
 
 %m = sort(rand(1, 10),'descend')     %sample data
 
-%x = [1 1 1 1 1 1 1 1 1 1];
+x = [1 1 1 1 1 1 1 1 1 1];
 mu = [7 6 3 7 3 5 1 5 7 4];
 sig = [8 9 7 5 9 4 5 2 3 9];
 
