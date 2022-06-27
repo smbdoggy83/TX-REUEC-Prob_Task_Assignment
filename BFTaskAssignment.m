@@ -44,11 +44,11 @@ AllX = {};
 %find all combinations that meet work requirments
 for i = 1:(2^numberOfDevices)
     check = dec2bin(i, numberOfDevices)
-    for j:numberOfDevices
-        if check(j) == "1"
+    %for j:numberOfDevices
+        %if check(j) == "1"
          % not sure if I should sum up every device individually in that
          % equation or the total mu and std and then plug into the equation
-    end
+    %end
 end
 
 % combos = FindAll(workRequired, workList);
