@@ -2,9 +2,9 @@
 % will serve as a baseline to compare FMS to.
 %% 
 tic
-% for loop = 10:2:20
+for loop = 10:2:20
 % We will test number of devices from 10 -> 20 in increments of 2
-numberOfDevices = 10;
+numberOfDevices = loop;
 % Minimum work requirement defined by user
 workRequired = 500;
 % Variables to keep track of current and min delay calculations 
@@ -47,17 +47,19 @@ work = 0; % amount of work each subset completes
 AllX = {};
 %find all combinations that meet work requirments
 for ii = 1:(2^numberOfDevices)
-    check = dec2bin(ii, numberOfDevices);
+    check = dec2bin(ii, numberOfDevices); % Check is each individual set
 
-    for jj = 1:numberOfDevices
-        if check(jj) == "1"
+%Check which devices are chosen. If chosen create local sum of std, mean
+% and work.
+    for jj = 1:numberOfDevices 
+        if check(jj) == "1" 
             totalStd = totalStd + stdList(jj)^2;
             totalMean = totalMean + meanList(jj);
             work = work + workList(jj);
          end
     end
-    totalStd = sqrt(totalStd);
-    delay = totalMean + A *totalStd;
+    totalStd = sqrt(totalStd); % take sqrt of std's sum for this set
+    delay = totalMean + A *totalStd; % D >= Mu + A*std
     if (delay < minDelay) && (work >= workRequired)
     minDelay = delay;
     indexList1 = check;
@@ -66,11 +68,12 @@ for ii = 1:(2^numberOfDevices)
 end
 
 disp("**************************************")
+disp("Number of Devices: " + numberOfDevices)
 disp("Min Delay : " + minDelay)
 disp("Chosen Set: " + indexList1)
 toc
 disp("**************************************")
-
+end
 %minDelay = intmax;
 
 %combos = FindAll(workRequired, workList);
@@ -132,7 +135,6 @@ disp("**************************************")
 %         end
 %     end
 % end
-
 
 
 
