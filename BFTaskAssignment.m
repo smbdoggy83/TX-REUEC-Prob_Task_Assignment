@@ -48,17 +48,19 @@ AllX = {};
 %find all combinations that meet work requirments
 for ii = 1:(2^numberOfDevices)
     check = dec2bin(ii, numberOfDevices);
+
     for jj = 1:numberOfDevices
         if check(jj) == "1"
-            totalStd = totalStd + stdList(jj);
+            totalStd = totalStd + stdList(jj)^2;
             totalMean = totalMean + meanList(jj);
             work = work + workList(jj);
-            delay = totalMean + A *totalStd;
          end
     end
-             if (delay < minDelay) && (work >= workRequired)
-             minDelay = delay;
-             indexList1 = check;
+    totalStd = sqrt(totalStd);
+    delay = totalMean + A *totalStd;
+    if (delay < minDelay) && (work >= workRequired)
+    minDelay = delay;
+    indexList1 = check;
     end
     totalMean = 0; totalStd = 0; delay = 0; work = 0;
 end
@@ -130,6 +132,11 @@ disp("**************************************")
 %         end
 %     end
 % end
+
+
+
+
+
 % AllX = dec2bin(0:2^n-1)' - '0'; all possible combinations function to try
 % export randomly generated data to use in other Algos
 % p = 0.99;
