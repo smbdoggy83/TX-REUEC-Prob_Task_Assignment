@@ -11,9 +11,9 @@ workRequired = 500;
 delay = 0;
 minDelay = intmax;
 % Position of the minimum set within our array
-position = 0;
+%position = 0;
 % Identifying indicies within our worklist of choosen items 
-indexList = zeros(numberOfDevices, 1);
+%indexList = zeros(numberOfDevices, 1);
 
 % Parallel Arrays containing information about each device
 % Randomly generated mean from 10 -> 100 for reach deivce(Uniform Distro)
@@ -29,26 +29,26 @@ minWork = 100; maxWork = 200;
 workList = randi([minWork, maxWork ],numberOfDevices,1);
 
 % Randomly generated delay from above generated variables (Normal Distro)
-delayList = randn(numberOfDevices, 1);
+%delayList = randn(numberOfDevices, 1);
 
 % Use individual Stds and Means to shift values to correct distro
-for i = 1:numberOfDevices
-    delayList(i) = stdList(i) * delayList(i) + meanList(i);
-end
+% for i = 1:numberOfDevices
+%     delayList(i) = stdList(i) * delayList(i) + meanList(i);
+% end
 % Displaying our list of normally distrubuted values
 %disp(delayList)
 
-p = 0.95; % Probability constant, just arbitrarily setting it to this for now
+p = .99; % Probability constant, just arbitrarily setting it to this for now
 A = sqrt(2) * erfinv(2*p - 1); % Constant
-totalMean = 0;
-totalStd = 0;
-work = 0;
+totalMean = 0; % Tracking each subset's total mean
+totalStd = 0; % Tracking each subset's total std
+work = 0; % amount of work each subset completes
 
 AllX = {};
 %find all combinations that meet work requirments
 for ii = 1:(2^numberOfDevices)
     check = dec2bin(ii, numberOfDevices);
-    for j = 1:numberOfDevices
+    for jj = 1:numberOfDevices
         if check(jj) == "1"
             totalStd = totalStd + stdList(jj);
             totalMean = totalMean + meanList(jj);
@@ -58,41 +58,47 @@ for ii = 1:(2^numberOfDevices)
     end
              if (delay < minDelay) && (work >= workRequired)
              minDelay = delay;
-             indexList = check;
+             indexList1 = check;
     end
     totalMean = 0; totalStd = 0; delay = 0; work = 0;
 end
 
-combos = FindAll(workRequired, workList);
+disp("******************************")
+disp("*** min delay closed form: " + )
+disp("*** " + indexList1 + "     *** ")
 
-% %find best delay from all combinations
-for i = 1:numel(combos)
-    for j = 1:numel(combos{i})
-        holder = find(workList == combos{i}(j));
-        delay = delay + min(delayList(holder(1:end)));
-    end
-    if delay(1:end)< min(minDelay)
-        minDelay = delay;
-        position = i;
-    end
-    delay = 0;
-end
+minDelay = intmax;
 
-for i = 1:length(combos{position})
-indexList(find(workList == combos{position}(i))) = 1;
-end
+%combos = FindAll(workRequired, workList);
+
+%find best delay from all combinations
+% for i = 1:numel(combos)
+%     for j = 1:numel(combos{i})
+%         holder = find(workList == combos{i}(j));
+%         delay = delay + min(delayList(holder(1:end)));
+%     end
+%     if delay(1:end)< min(minDelay)
+%         minDelay = delay;
+%         position = i;
+%     end
+%     delay = 0;
+% end
+% 
+% for i = 1:length(combos{position})
+% indexList(find(workList == combos{position}(i))) = 1;
+% end
 
 toc
 
-items = rand(numberOfDevices, 1);
-for i = 1:length(items)
-    items(i) = i;
-end
-disp("-------------" + loop + " Devices----------------------------")
-T = table(items, indexList, delayList, workList)
-output = minDelay;
-disp("Min Delay: " + min(output)) % Posiblility of duplicates, take the lower value 
-disp("---------------------------------------------------")
+% items = rand(numberOfDevices, 1);
+% for i = 1:length(items)
+%     items(i) = i;
+% end
+% disp("------------- Devices ----------------------------")
+% T = table(items, indexList, delayList, workList)
+% output = minDelay;
+% disp("Min Delay: " + min(output)) % Posiblility of duplicates, take the lower value 
+% disp("---------------------------------------------------")
 
 
 
@@ -106,22 +112,22 @@ disp("---------------------------------------------------")
 % Returns: Complete list of all possible combinations which meet
 % workRequired
 % 
-function Combinations = FindAll(workRequired, workList)
-    Combinations = {};
-    for i = 1:numel(workList)
-        findCombo(workList(i), workList(i+1:length(workList)))
-    end
-
-    function findCombo(current, rest)
-        if sum(current) < workRequired
-            for j = 1:numel(rest)
-                findCombo([current,rest(j)], rest(j+1:end))
-            end
-        else
-            Combinations{end+1} = current;
-        end
-    end
-end
+% function Combinations = FindAll(workRequired, workList)
+%     Combinations = {};
+%     for i = 1:numel(workList)
+%         findCombo(workList(i), workList(i+1:length(workList)))
+%     end
+% 
+%     function findCombo(current, rest)
+%         if sum(current) < workRequired
+%             for j = 1:numel(rest)
+%                 findCombo([current,rest(j)], rest(j+1:end))
+%             end
+%         else
+%             Combinations{end+1} = current;
+%         end
+%     end
+% end
 % AllX = dec2bin(0:2^n-1)' - '0'; all possible combinations function to try
 % export randomly generated data to use in other Algos
 % p = 0.99;
