@@ -42,7 +42,7 @@ minDelay = intmax;
 % Displaying our list of normally distrubuted values
 %disp(delayList)
 
-p = .99; % Probability constant, just arbitrarily setting it to this for now
+p = .99; % Probability constant
 A = sqrt(2) * erfinv(2*p - 1); % Constant
 totalMean = 0; % Tracking each subset's total mean
 totalStd = 0; % Tracking each subset's total std
