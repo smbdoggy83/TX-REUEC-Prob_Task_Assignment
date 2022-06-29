@@ -1,4 +1,5 @@
-function [minWorkReq, totalMean, A, totalStd] = P2(W, w, x, means, stdDevs)
+function [minWorkReq, totalMean, A, totalStd] = P2(means, stdDevs, w, p, W, x)
+
 %% Represents equation P2. This function is meant to just perform calculations 
 %% and return results, whereas the true "minimization" is done by the algorithm
 %% that calls the method. 
@@ -23,17 +24,12 @@ function [minWorkReq, totalMean, A, totalStd] = P2(W, w, x, means, stdDevs)
     % Finding the "such that" condition of P2
     n = length(x); % Number of devices
     workReq = sum(w(1:n) .* x(1:n)); % The sum of all work per chosen device (sum from 1:n of w(i) * x(i) ). Must be >= W
-    if (workReq >= W) 
-        minWorkReq = true;
-    else
-        minWorkReq = false;
-    end
+    minWorkReq = (workReq >= W);
 
     % Finding μ
     totalMean = sum(means(1:n) .* x(1:n)); % Total average calculation, as per beginning of section IV. 
     
     % Finding A
-    p = 0.99; % Confidence level, can try 95% later
     A = sqrt(2) * erfinv(2*p - 1); % Constant
 
     % Finding σ
