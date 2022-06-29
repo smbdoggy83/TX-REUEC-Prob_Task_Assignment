@@ -2,6 +2,7 @@
 % will serve as a baseline to compare FMS to.
 %% 
 tic
+dataTable = table;
 for loop = 10:2:20
 % We will test number of devices from 10 -> 20 in increments of 2
 numberOfDevices = loop;
@@ -10,23 +11,26 @@ workRequired = 500;
 % Variables to keep track of current and min delay calculations 
 delay = 0;
 minDelay = intmax;
+
+[meanList, stdList, workList] = DataGen(dataTable, numberOfDevices)
+
 % Position of the minimum set within our array
 %position = 0;
 % Identifying indicies within our worklist of choosen items 
 %indexList = zeros(numberOfDevices, 1);
 
-% Parallel Arrays containing information about each device
-% Randomly generated mean from 10 -> 100 for reach deivce(Uniform Distro)
-minMean = 10; maxMean = 100;
-meanList = randi([minMean, maxMean], numberOfDevices,1);
-
-% Randomly generated std -5 -> 5 for reach deivce(Uniform Distro)
-minStd = -5; maxStd = 5;
-stdList = randi([minStd,maxStd], numberOfDevices,1);
-
-% Randomly generated work 100 -> 200 for each device (Uniform Distro)
-minWork = 100; maxWork = 200;
-workList = randi([minWork, maxWork ],numberOfDevices,1);
+% % Parallel Arrays containing information about each device
+% % Randomly generated mean from 10 -> 100 for reach deivce(Uniform Distro)
+% minMean = 10; maxMean = 100;
+% meanList = randi([minMean, maxMean], numberOfDevices,1);
+% 
+% % Randomly generated std -5 -> 5 for reach deivce(Uniform Distro)
+% minStd = -5; maxStd = 5;
+% stdList = randi([minStd,maxStd], numberOfDevices,1);
+% 
+% % Randomly generated work 100 -> 200 for each device (Uniform Distro)
+% minWork = 100; maxWork = 200;
+% workList = randi([minWork, maxWork ],numberOfDevices,1);
 
 % Randomly generated delay from above generated variables (Normal Distro)
 %delayList = randn(numberOfDevices, 1);
