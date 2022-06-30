@@ -2,7 +2,7 @@
 % will serve as a baseline to compare FMS to.
 
 function [totalMean, A, totalStd] = BFTaskAssignment(meanList, stdList, workList, p, workRequired)
-    tic
+    
     A = sqrt(2) * erfinv(2*p - 1); % Constant
     totalMean = 0; % Tracking each subset's total mean
     totalStd = 0; % Tracking each subset's total std

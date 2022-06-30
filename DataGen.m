@@ -22,7 +22,7 @@ dataTable.Mean = meanList;
 dataTable.Std= stdList;
 dataTable.Work = workList;
 
-name = "file" + numberOfDevices
+name = "file" + numberOfDevices;
 
 writetable(dataTable, (name))
 

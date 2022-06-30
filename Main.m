@@ -14,12 +14,13 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     [meanList, stdList, workList] = DataGen(dataTable, numberOfDevices);
 
     %% Call Brute Force Algorithm
-
+    tic
     [totalMean, A, totalStd] = BFTaskAssignment(meanList, stdList, workList, p, workRequired);
     
     %% Alternate Brute Force using P2
     
     alg2MinDelay = intmax;
+    tic
     for i = 1 : (2^numberOfDevices) % Amount of possibilities
         % Create x as a string
         xString = dec2bin(i, numberOfDevices); 
@@ -50,6 +51,7 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     disp("Number of Devices: " + numberOfDevices)
     disp("Min Delay : " + num2str(alg2MinDelay))
     disp("Chosen Set: " + num2str(alg2BestDevices))
+    toc
     disp("**************************************")
 
     %% Call FMS
