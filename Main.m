@@ -21,7 +21,7 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     
     alg2MinDelay = intmax;
     tic
-    for i = 1 : (2^numberOfDevices) % Amount of possibilities
+    for i = 1 : (2^numberOfDevices-1) % Amount of possibilities
         % Create x as a string
         xString = dec2bin(i, numberOfDevices); 
         % Convert xString to array of ints, 1's or 0's

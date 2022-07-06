@@ -14,7 +14,7 @@ function [totalMean, A, totalStd] = BFTaskAssignment(meanList, stdList, workList
     numberOfDevices = length(meanList);
 
     %find all combinations that meet work requirments
-    for ii = 1:(2^numberOfDevices)
+    for ii = 1:(2^numberOfDevices-1)
         check = dec2bin(ii, numberOfDevices); % Check is each individual set
     
         %Check which devices are chosen. If chosen create local sum of std, mean
