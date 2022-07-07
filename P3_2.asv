@@ -1,11 +1,9 @@
-function [deviceList, totalMean] = P3_2(k, W, u, o, w)
+function [deviceList, totalMean] = P3_2(k, W, w, x, u, o)
 % k = the constraint
 % W = min work
-% w = work capability of each device (array)
-% u = mean delay of each device (array)
-% o = std dev of delay of each device (array)
+% w = work output of each devic
 
-numDevices = length(u); % n
+numDevices = length(x);
 
 % Preallocation
 f = zeros(numDevices, 1);
