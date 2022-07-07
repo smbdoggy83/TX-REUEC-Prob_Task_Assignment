@@ -6,15 +6,15 @@ dataTable = table;
 % Minimum work requirement defined by user
 workRequired = 500;
 p = .99; % Probability constant
+A = sqrt(2) * erfinv(2*p - 1); % Constant
 
 %% Begin Algorithms
 for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     % We will test number of devices from 10 -> 20 in increments of 2
 
     [meanList, stdList, workList] = DataGen(dataTable, numberOfDevices);
-    A = sqrt(2) * erfinv(2*p - 1); % Constant
 
-    
+    %{
     %% Call Brute Force Algorithm
     tic
     [totalMean, A, totalStd] = BFTaskAssignment(meanList, stdList, workList, p, workRequired);
@@ -56,11 +56,13 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     toc
     disp("**************************************")
     
+    %}
 
     %% Call FMS
     % Should these steps be done in here or another file altogether?
     % Store results in .csv 
-    
+    minSolution = FMS(rot90(meanList), rot90(stdList), rot90(workList), A, workRequired)
+
     %% Call any other algorithms 
 
 end % Repeat loop again with next increment of numberOfDevices

@@ -15,7 +15,7 @@ function minSolution = FMS(means, stdDevs, works, A, W)
 %% 
 
 %1: Call Algorithm RSS to get the search range of [0 h] in P3
-
+[range, X] = RSS(means, stdDevs, works, A, W);
 
 %2: Call Algorithm FEP to obtain all the extreme points in the search range [0 h] in P3
 
