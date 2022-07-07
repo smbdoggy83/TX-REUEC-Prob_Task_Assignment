@@ -12,7 +12,9 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     % We will test number of devices from 10 -> 20 in increments of 2
 
     [meanList, stdList, workList] = DataGen(dataTable, numberOfDevices);
+    A = sqrt(2) * erfinv(2*p - 1); % Constant
 
+    
     %% Call Brute Force Algorithm
     tic
     [totalMean, A, totalStd] = BFTaskAssignment(meanList, stdList, workList, p, workRequired);
@@ -34,8 +36,8 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
         %x = str2num(check)
 
         %Run Function with current chosen devices x
-        [minWorkReq, totalMean, A, totalStd] = P2(rot90(meanList), rot90(stdList), rot90(workList), p, workRequired, x);
-
+        [minWorkReq, totalMean, totalStd] = P2(rot90(meanList), rot90(stdList), rot90(workList), p, workRequired, x);
+        
         % This is where the minimization occurs
         if (minWorkReq) % Don't even try if the minimum work requirement wasn't met
             tempDelay = totalMean + (A*totalStd);
@@ -53,10 +55,11 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     disp("Chosen Set: " + num2str(alg2BestDevices))
     toc
     disp("**************************************")
+    
 
     %% Call FMS
     % Should these steps be done in here or another file altogether?
-    % Store results in .csv
+    % Store results in .csv 
     
     %% Call any other algorithms 
 

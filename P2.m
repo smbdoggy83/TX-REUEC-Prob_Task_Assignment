@@ -1,4 +1,4 @@
-function [minWorkReq, totalMean, A, totalStd] = P2(means, stdDevs, works, p, W, x)
+function [minWorkReq, totalMean, totalStd] = P2(means, stdDevs, works, p, W, x)
 
 %% Represents equation P2. This function is meant to just perform calculations 
 %% and return results, whereas the true "minimization" is done by the algorithm
@@ -33,7 +33,9 @@ function [minWorkReq, totalMean, A, totalStd] = P2(means, stdDevs, works, p, W, 
     totalMean = sum(means(1:n) .* x(1:n)); % Total average calculation, as per beginning of section IV. 
     
     % Finding A
-    A = sqrt(2) * erfinv(2*p - 1); % Constant
+    %A = sqrt(2) * erfinv(2*p - 1); % Constant
+    % A doesn't change so it was taken out of the loop to make the code
+    % more efficient
 
     % Finding σ
     sigSqr = stdDevs.^2; % Squares each element, stores into another array
