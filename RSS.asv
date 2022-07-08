@@ -22,7 +22,7 @@ dataTable = table;
 W = 500;
 p = .99; % Probability constant
 A = sqrt(2) * erfinv(2*p - 1); % Constant
-stdDevs = stdDevs .^2;
+
 %1: "solve P3 at 0 to get X(0)"
             %x = zeros(length(means)); Commenting out some lines for now to
             %make work with updated P3_2
@@ -30,14 +30,13 @@ k = 0;
 [X1, ~] = P3_2(0, W, means,stdDevs, works);
 std = sqrt(sum(X1(1:length(X1)).*stdDevs(1:length(X1))));
 
-while (k*std ~= A) 
+while (k*std <= 2.1 || k*std >= 2.4) 
     k = A / std;
     [X2, ~] = P3_2(k, W, means,stdDevs, works);
     std = sqrt(sum(X2(1:length(X2)).*stdDevs(1:length(X2))));
 end
 
-X1
-X2
+
 
 
 %     n = length(x); % Number of devices
