@@ -10,33 +10,49 @@ function [range, X] = RSS(means, stdDevs, works, A, W)
 % 500 ~ x (xi): Chosen factor per device (1 = chosen, 2 = unchosen).  The
 % paper refers to this as "vector X". Ex: x[2] = 1 --> device 2 was chosen.
 %
-clear
 % Outputs: ~ range: array representing search space. Should only have two
 % items: [0, h]. ~ X: array representing device combo at 0 and at h. Should
 % only have two items: [X(0), X(h)]
 
 % Mapping out every line from algorithm
-dataTable = table;
+%dataTable = table;
 
-[means, stdDevs, works] =DataGen(dataTable, 10);
-W = 500;
-p = .99; % Probability constant
-A = sqrt(2) * erfinv(2*p - 1); % Constant
-
+%[means, stdDevs, works] =DataGen(dataTable, 10);
+%W = 500;
+%p = .99; % Probability constant
+%A = sqrt(2) * erfinv(2*p - 1); % Constant
+%stdDevs = stdDevs .^2;
 %1: "solve P3 at 0 to get X(0)"
             %x = zeros(length(means)); Commenting out some lines for now to
             %make work with updated P3_2
+n = length(means);
 k = 0;
-[X1, ~] = P3_2(0, W, means,stdDevs, works);
-std = sqrt(sum(X1(1:length(X1)).*stdDevs(1:length(X1))));
+[X0, ~] = P3_2(0, W, means, stdDevs, works);
+X0 = rot90(X0);
+%std = sqrt( sum( X0( 1:length(X0)).*stdDevs(1:length(X0) ) ) )
 
-while (k*std <= 2.1 || k*std >= 2.4) 
-    k = A / std;
-    [X2, ~] = P3_2(k, W, means,stdDevs, works);
-    std = sqrt(sum(X2(1:length(X2)).*stdDevs(1:length(X2))));
+sigSqr = stdDevs.^2; % Squares each element, stores into another array
+std = sqrt( sum(sigSqr(1:n) .* X0(1:n)) ); % std dev calculation of chosen devices, as per beginning of section IV. 
+
+count = 0;
+while (k*std ~= A) 
+    disp("Loop #" + count + ": k * std is " + (k*std) + ", A is " + A);
+    
+    k = A / std
+
+    [X1, ~] = P3_2(k, W, means,stdDevs, works);
+    X1 = rot90(X1)
+
+    std = sqrt( sum(sigSqr(1:n) .* X1(1:n)) ) % std dev calculation of chosen devices, as per beginning of section IV. 
+%   std = sqrt(sum(X1(1:length(X1)).*stdDevs(1:length(X1))));
+
+    count = count + 1;
 end
 
+h = k;
 
+range = [0; h]
+X = [X0; X1]
 
 
 %     n = length(x); % Number of devices

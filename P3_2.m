@@ -18,14 +18,14 @@ for i = 1:numDevices
     intcon(1, i) = i;              %intcon = [1, 2, 3...];
     A(i) = -1*w(i);             %A = [-w(1), -w(2), -w(3)...];
 end
-f
+%f
 %intcon = [];
 B = -W;
 Aeq = [];
 Beq = [];
 lb = zeros(numDevices, 1);
 ub = ones(numDevices, 1);
-options=optimoptions(@intlinprog,'display','off')
+options=optimoptions(@intlinprog,'display','off');
 [deviceList, totalMean] = intlinprog(f, intcon, A, B, Aeq, Beq, lb, ub, options);
 
 end
