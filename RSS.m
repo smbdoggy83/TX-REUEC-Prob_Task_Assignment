@@ -52,9 +52,9 @@ disp("Done after " + (count-1) + " loops. Final k * std was " + (k*std) + ", A i
 
 h = k;
 
-range = [0; h]
+range = [0; h];
 X = [X0; X1];
-X = round(X)
+X = round(X);
 
 
 %     n = length(x); % Number of devices
