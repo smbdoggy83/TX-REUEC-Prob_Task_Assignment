@@ -13,7 +13,7 @@ if isequal(X(1,:), X(2,:))
 end
 %add [0 X(0)] and [h X(h)] to the extreme point set Sp
 ExtPoints(1).k = 0; ExtPoints(1).solution = X(1,:);
-ExtPoints(2).k = 0; ExtPoints(2).solution = X(1,:);
+ExtPoints(2).k = range(2); ExtPoints(2).solution = X(2,:);
 %add range [0 h] to the range set
 rangeSet(1).lower = range(1); rangeSet(1).upper = range(2);
 
@@ -28,9 +28,21 @@ while ~isempty(rangeSet)
        mean1 = sum(mean .* X(1,:)); 
        mean2 = sum(mean .* X(2,:));
        % The cross point c
-       c = mean1 - mean2 / STD1^2 - STD2^2
-
+       c = (mean1 - mean2) / (STD1^2 - STD2^2);
+       if c ~= a && c~= b
+           [Xc, ~] = P3_2(c, W, mean, std, works);
+           Xc = round(Xc');
+           if isequal(Xc, X(1,:)) && ~isequal(Xc, X(2,:))
+               % add range (c b] to Range Set
+               rangeSet(end+1).lower = c; rangeSet(end).upper = b; 
+           elseif ~isequal(Xc, X(1,:)) && isequal(Xc, X(2,:))
+               rangeSet(end+1).lower = a; rangeSet(end).upper = c;
+           elseif ~isequal(Xc, X(1,:)) && ~isequal(Xc, X(2,:))
+               ExtPoints(end+1).k = c; ExtPoints(end).solution = Xc;
+               rangeSet(end+1).lower = a; rangeSet(end).upper = c;
+               rangeSet(end+1).lower = c; rangeSet(end).upper = b;
+           end
+       end
     end
-
 end
 

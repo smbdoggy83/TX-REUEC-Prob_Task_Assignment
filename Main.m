@@ -61,7 +61,7 @@ for numberOfDevices = 20:2:20 % Should be 6 times, file10 - file20
     %% Call FMS
     % Should these steps be done in here or another file altogether?
     % Store results in .csv 
-    minSolution = FMS(rot90(meanList), rot90(stdList), rot90(workList), A, workRequired);
+    minSolution = FMS(rot90(meanList), rot90(stdList), rot90(workList), A, workRequired)
 
     %% Call any other algorithms 
 
