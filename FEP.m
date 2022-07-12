@@ -2,7 +2,9 @@
 % Documentation to be added
 %%
 function [ExtPoints] = FEP(mean, std, works, range, X, W)
-rangeSet = ([])
+
+rangeSet = ([]);
+sigSqr = std.^2; % Square each element for future calculations
 % Check to see if solutions are the same
 if isequal(X(1,:), X(2,:)) 
     % add [0 X(0)] to the extreme point set Sp and return
@@ -19,8 +21,14 @@ while ~isempty(rangeSet)
     %pop the first element [a b] from Sr
     a = rangeSet(1).lower; b = rangeSet(1).upper;
     rangeSet(1) = ([]);
-    if ~isequal(X(1,:), X(2,:))
-        % c = Mu(a) - Mu(b) / std^2(a) - std^2(b) 
+    if ~(isequal(X(1,:), X(2,:)))
+       % Compute STDs and Means for X(1) and X(2)
+       STD1 = sqrt( sum(sigSqr .* X(1,:)));
+       STD2 = sqrt( sum(sigSqr .* X(2,:)));
+       mean1 = sum(mean .* X(1,:)); 
+       mean2 = sum(mean .* X(2,:));
+       % The cross point c
+       c = mean1 - mean2 / STD1^2 - STD2^2
 
     end
 

@@ -41,7 +41,7 @@ while (k*std ~= A)
     k = A / std
 
     [X1, ~] = P3_2(k, W, means,stdDevs, works);
-    X1 = rot90(X1)
+    X1 = rot90(X1);
 
     std = sqrt( sum(sigSqr(1:n) .* X1(1:n)) ) % std dev calculation of chosen devices, as per beginning of section IV. 
 %   std = sqrt(sum(X1(1:length(X1)).*stdDevs(1:length(X1))));
@@ -53,7 +53,8 @@ disp("Done after " + (count-1) + " loops. Final k * std was " + (k*std) + ", A i
 h = k;
 
 range = [0; h]
-X = [X0; X1]
+X = [X0; X1];
+X = round(X)
 
 
 %     n = length(x); % Number of devices
