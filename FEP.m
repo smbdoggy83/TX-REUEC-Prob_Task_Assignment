@@ -18,7 +18,7 @@ ExtPoints(2).k = range(2); ExtPoints(2).solution = X(2,:);
 rangeSet(1).lower = range(1); rangeSet(1).upper = range(2);
 rangeSet(1).aSet = X(1,:); rangeSet(1).bSet = X(2,:);
 while ~isempty(rangeSet)
-    %pop the first element [a b] from Sr
+    % pop the first element [a b] from Sr
     a = rangeSet(1).lower; b = rangeSet(1).upper;
     aSet = rangeSet(1).aSet; bSet = rangeSet(1).bSet;
     rangeSet(1) = ([]);
@@ -29,7 +29,7 @@ while ~isempty(rangeSet)
        mean1 = sum(mean .* aSet); 
        mean2 = sum(mean .* bSet);
        % The cross point c
-       c = (mean1 - mean2) / (STD1^2 - STD2^2);
+       c = (mean1 - mean2) / (STD1^2 - STD2^2)
        if c ~= a && c ~= b
            [Xc, ~] = P3_2(c, W, mean, std, works);
            Xc = round(Xc');
@@ -38,16 +38,23 @@ while ~isempty(rangeSet)
                rangeSet(end+1).lower = c; rangeSet(end).upper = b;
                rangeSet(end).aSet = Xc; rangeSet(end).bSet = bSet;
            elseif ~isequal(Xc, aSet) && isequal(Xc, bSet)
+               % add range [a c) to Sr
                rangeSet(end+1).lower = a; rangeSet(end).upper = c;
                rangeSet(end).aSet = aSet; rangeSet(end).bSet = Xc;
            elseif ~isequal(Xc, aSet) && ~isequal(Xc, bSet)
+               % add [c X(c)] to Sp and add ranges [a c) and [c b] to Sr
                ExtPoints(end+1).k = c; ExtPoints(end).solution = Xc;
                rangeSet(end+1).lower = a; rangeSet(end).upper = c;
                rangeSet(end).aSet = aSet; rangeSet(end).bSet = Xc;
                rangeSet(end+1).lower = c; rangeSet(end).upper = b;
                rangeSet(end).aSet = Xc; rangeSet(end).bSet = bSet;
            end
+       else
+           if ~isempty(rangeSet)
+               rangeSet(1)
+           end
        end
+       
     end
 end
 % Do not really know how to make c inclusive or exclusetive for searching
