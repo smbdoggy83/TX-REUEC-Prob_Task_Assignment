@@ -34,8 +34,13 @@ X0 = rot90(X0);
 sigSqr = stdDevs.^2; % Squares each element, stores into another array
 std = sqrt( sum(sigSqr(1:n) .* X0(1:n)) ); % std dev calculation of chosen devices, as per beginning of section IV. 
 
+if std == 0
+    range = []
+    X = []
+    return
+end
 count = 1;
-while (abs(k*std - A) > .0001) %while (k*std ~= A) 
+while (abs(k*std - A) > .001) %while (k*std ~= A) 
     disp("Loop #" + count + ": k * std is " + (k*std) + ", A is " + A);
     
     k = A / std
@@ -48,6 +53,7 @@ while (abs(k*std - A) > .0001) %while (k*std ~= A)
 
     count = count + 1;
 end
+
 disp("Done after " + (count-1) + " loops. Final k * std was " + (k*std) + ", A is " + A);
 
 h = k;

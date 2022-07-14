@@ -1,3 +1,5 @@
+while(1)
+
 clear all;
 clc;
 %% Import Data
@@ -64,6 +66,11 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     tic
     minSolution = FMS(rot90(meanList), rot90(stdList), rot90(workList), A, workRequired)
     toc
+
+    if isempty(minSolution)
+        numberOfDevices = numberOfDevices - 2
+    end
     %% Call any other algorithms 
 
 end % Repeat loop again with next increment of numberOfDevices
+end

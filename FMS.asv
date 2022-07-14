@@ -17,9 +17,6 @@ function minSolution = FMS(means, stdDevs, works, A, W)
 %1: Call Algorithm RSS to get the search range of [0 h] in P3
 [range, X] = RSS(means, stdDevs, works, A, W);
 if isempty(range) || isempty(X)
-    minSolution = []
-    return
-end
 [ExtPoints] = FEP(means, stdDevs, works, range, X, W);
 minSolution = ExtPoints; % temp for now so main doesnt error
 
