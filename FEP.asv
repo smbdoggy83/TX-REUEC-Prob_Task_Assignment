@@ -19,9 +19,9 @@ rangeSet(1).lower = range(1); rangeSet(1).upper = range(2);
 rangeSet(1).aSet = X(1,:); rangeSet(1).bSet = X(2,:);
 while ~isempty(rangeSet)
     % pop the first element [a b] from Sr
-    a = rangeSet(1).lower; b = rangeSet(1).upper;
-    aSet = rangeSet(1).aSet; bSet = rangeSet(1).bSet;
-    rangeSet(1) = ([]);
+    a = rangeSet(end).lower; b = rangeSet(end).upper;
+    aSet = rangeSet(end).aSet; bSet = rangeSet(end).bSet;
+    rangeSet(end) = ([]);
     if ~(isequal(aSet, bSet))
        % Compute STDs and Means for X(1) and X(2)
        STD1 = sqrt( sum(sigSqr .* aSet));
@@ -35,23 +35,40 @@ while ~isempty(rangeSet)
            Xc = round(Xc');
            if isequal(Xc, aSet) && ~isequal(Xc, bSet)
                % add range (c b] to Range Set
-               rangeSet(end+1).lower = c+1; rangeSet(end).upper = b;
+               rangeSet(end+1).lower = c; rangeSet(end).upper = b;
                rangeSet(end).aSet = Xc; rangeSet(end).bSet = bSet;
+               if ~isempty(rangeSet)
+               rangeSet(1)
+               length(rangeSet)
+               disp('A')
+               end
            elseif ~isequal(Xc, aSet) && isequal(Xc, bSet)
                % add range [a c) to Sr
                rangeSet(end+1).lower = a; rangeSet(end).upper = c;
                rangeSet(end).aSet = aSet; rangeSet(end).bSet = Xc;
            elseif ~isequal(Xc, aSet) && ~isequal(Xc, bSet)
+               if ~isempty(rangeSet)
+               rangeSet(1)
+               length(rangeSet)
+               disp('B')
+               end
                % add [c X(c)] to Sp and add ranges [a c) and [c b] to Sr
                ExtPoints(end+1).k = c; ExtPoints(end).solution = Xc;
                rangeSet(end+1).lower = a; rangeSet(end).upper = c;
                rangeSet(end).aSet = aSet; rangeSet(end).bSet = Xc;
                rangeSet(end+1).lower = c; rangeSet(end).upper = b;
                rangeSet(end).aSet = Xc; rangeSet(end).bSet = bSet;
+               if ~isempty(rangeSet)
+               rangeSet(end)
+               rangeSet(end-1)
+               length(rangeSet)
+               disp('Both')
+               end
            end
        else
            if ~isempty(rangeSet)
                rangeSet(1)
+               disp('Else')
            end
        end
        

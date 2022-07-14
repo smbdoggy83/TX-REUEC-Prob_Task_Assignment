@@ -19,9 +19,10 @@ rangeSet(1).lower = range(1); rangeSet(1).upper = range(2);
 rangeSet(1).aSet = X(1,:); rangeSet(1).bSet = X(2,:);
 while ~isempty(rangeSet)
     % pop the first element [a b] from Sr
-    a = rangeSet(1).lower; b = rangeSet(1).upper;
-    aSet = rangeSet(1).aSet; bSet = rangeSet(1).bSet;
-    rangeSet(1) = ([]);
+    a = rangeSet(end).lower
+    b = rangeSet(end).upper
+    aSet = rangeSet(end).aSet; bSet = rangeSet(end).bSet;
+    rangeSet(end) = ([]);
     if ~(isequal(aSet, bSet))
        % Compute STDs and Means for X(1) and X(2)
        STD1 = sqrt( sum(sigSqr .* aSet));
@@ -29,7 +30,7 @@ while ~isempty(rangeSet)
        mean1 = sum(mean .* aSet); 
        mean2 = sum(mean .* bSet);
        % The cross point c
-       c = (mean1 - mean2) / (STD1^2 - STD2^2)
+       c = -1*((mean1 - mean2) / (STD1^2 - STD2^2))
        if c ~= a && c ~= b
            [Xc, ~] = P3_2(c, W, mean, std, works);
            Xc = round(Xc');
@@ -37,10 +38,6 @@ while ~isempty(rangeSet)
                % add range (c b] to Range Set
                rangeSet(end+1).lower = c; rangeSet(end).upper = b;
                rangeSet(end).aSet = Xc; rangeSet(end).bSet = bSet;
-               if ~isempty(rangeSet)
-               rangeSet(1)
-               length(rangeSet)
-               end
            elseif ~isequal(Xc, aSet) && isequal(Xc, bSet)
                % add range [a c) to Sr
                rangeSet(end+1).lower = a; rangeSet(end).upper = c;
@@ -52,11 +49,7 @@ while ~isempty(rangeSet)
                rangeSet(end).aSet = aSet; rangeSet(end).bSet = Xc;
                rangeSet(end+1).lower = c; rangeSet(end).upper = b;
                rangeSet(end).aSet = Xc; rangeSet(end).bSet = bSet;
-           end
-       else
-           if ~isempty(rangeSet)
-               rangeSet(1)
-               disp('Else')
+
            end
        end
        

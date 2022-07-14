@@ -9,7 +9,7 @@ p = .99; % Probability constant
 A = sqrt(2) * erfinv(2*p - 1); % Constant
 
 %% Begin Algorithms
-for numberOfDevices = 20:2:20 % Should be 6 times, file10 - file20
+for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     % We will test number of devices from 10 -> 20 in increments of 2
 
     [meanList, stdList, workList] = DataGen(dataTable, numberOfDevices);
