@@ -31,6 +31,10 @@ while ~isempty(rangeSet)
        mean2 = sum(mean .* bSet);
        % The cross point c
        c = -1*((mean1 - mean2) / (STD1^2 - STD2^2))
+       if isnan(c)
+         ExtPoints = [] 
+         return
+       end
        if c ~= a && c ~= b
            [Xc, ~] = P3_2(c, W, mean, std, works);
            Xc = round(Xc');

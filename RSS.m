@@ -34,7 +34,7 @@ X0 = rot90(X0);
 sigSqr = stdDevs.^2; % Squares each element, stores into another array
 std = sqrt( sum(sigSqr(1:n) .* X0(1:n)) ); % std dev calculation of chosen devices, as per beginning of section IV. 
 
-if std == 0
+if std < .000001
     range = []
     X = []
     return
@@ -49,7 +49,11 @@ while (abs(k*std - A) > .001) %while (k*std ~= A)
     X1 = rot90(X1);
 
     std = sqrt( sum(sigSqr(1:n) .* X1(1:n)) ) % std dev calculation of chosen devices, as per beginning of section IV. 
-%   std = sqrt(sum(X1(1:length(X1)).*stdDevs(1:length(X1))));
+    if std < .000001
+    range = []
+    X = []
+    return
+end
 
     count = count + 1;
 end

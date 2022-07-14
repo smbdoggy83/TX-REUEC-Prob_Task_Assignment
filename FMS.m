@@ -21,6 +21,10 @@ if isempty(range) || isempty(X)
     return
 end
 [ExtPoints] = FEP(means, stdDevs, works, range, X, W);
+if isempty(ExtPoints)
+    minSolution = []
+    return
+end
 minSolution = ExtPoints; % temp for now so main doesnt error
 
 %2: Call Algorithm FEP to obtain all the extreme points in the search range [0 h] in P3
