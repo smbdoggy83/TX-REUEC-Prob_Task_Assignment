@@ -1,4 +1,7 @@
+%{
 function [minWorkReq, totalMean, k, totalStdSqrd] = P2(W, w, x, means, stdDevs)
+%% Outdated function. P3_2 is now used
+
 %% Represents equation P3. This function is meant to just perform calculations 
 %% and return results, whereas the true "minimization" is done by the algorithm
 %% that calls the method. 
@@ -43,4 +46,4 @@ function [minWorkReq, totalMean, k, totalStdSqrd] = P2(W, w, x, means, stdDevs)
     totalStdSqrd = totalStd^2;
     
 end
-
+%}

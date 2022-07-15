@@ -1,9 +1,22 @@
+%{
+%% Represents equation P3. Uses intlinprog command to return the reduced search space
+Requirements: w, x, means, and stdDevs should all be the same length.
+Example: [deviceList, totalMean] = P3_2(0, 500, [], stdDevs, w)
+
+Inputs: 
+~ k: Coefficient used for solution searching. 
+~ W: For condition 1, total amount of work needed to meet or exceed. Ex: 500
+~ means (μi): The average delay per device. Ex: means[2] = average delay of device 2
+~ stdDevs (σi): The standard deviation of delay per device. Ex: stdDevs[2] = standard deviation of delay of device 2
+~ w (wi): Work accomplished per device. Ex: w[2] = work done by device 2
+
+Outputs:
+~ deviceList (X): A single array of devices that best matches the inputs.
+Minimizes μ + kσ while also making sure that the minimum work requirement
+W is met. 
+~ totalMean: Overall average of minimal solution (μ)
+%}
 function [deviceList, totalMean] = P3_2(k, W, u, o, w)
-% k = the constraint
-% W = min work
-% w = work capability of each device (array)
-% u = mean delay of each device (array)
-% o = std dev of delay of each device (array)
 
 numDevices = length(u); % n
 

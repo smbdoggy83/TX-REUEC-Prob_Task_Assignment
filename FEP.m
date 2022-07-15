@@ -1,6 +1,22 @@
-%%
-% Documentation to be added
-%%
+%{
+%% The FEP Algorithm takes the search space given to it and finds extreme points so that only 1 or a few device combos are chosen. 
+
+Inputs:
+~ means (μi): The average delay per device. Ex: means[2] =
+average delay of device 2 
+~ stdDevs (σi): The standard deviation of delay
+per device. Ex: stdDevs[2] = standard deviation of delay of device 2 
+works: Work accomplished per device. Ex: w[2] = work done by device 2 
+~ range: array representing search space, should only have two indecies
+~ X: A single array of devices that best matches the inputs.
+~ W: For condition 1, total amount of work needed to meet or exceed. Ex:
+500 ~ x (xi): Chosen factor per device (1 = chosen, 2 = unchosen).  The
+paper refers to this as "vector X". Ex: x[2] = 1 --> device 2 was chosen.
+
+Outputs:
+ExtPoints: The extreme points, AKA the arrays of devices that are deemed
+most optimal
+%}
 function [ExtPoints] = FEP(mean, std, works, range, X, W)
 
 rangeSet = ([]);
