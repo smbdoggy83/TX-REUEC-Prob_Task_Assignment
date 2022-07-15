@@ -1,10 +1,8 @@
-TotalMatch = 0;
-for master = 1:1000
-
 clear all;
 clc;
 %% Import Data
-
+TotalMatch = 0;
+for master = 1:3
 dataTable = table;
 % Minimum work requirement defined by user
 workRequired = 500;
@@ -12,13 +10,14 @@ p = .99; % Probability constant
 A = sqrt(2) * erfinv(2*p - 1); % Constant
 
 %% Begin Algorithms
-for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
+for numberOfDevices = 20:2:20 % Should be 6 times, file10 - file20
     % We will test number of devices from 10 -> 20 in increments of 2
 
     [meanList, stdList, workList] = DataGen(dataTable, numberOfDevices);
 
     
     %% Call Brute Force Algorithm
+    
     tic
     [totalMean, A, totalStd] = BFTaskAssignment(meanList, stdList, workList, p, workRequired);
     
@@ -60,18 +59,23 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     disp("**************************************")
     
     
-
+    
     %% Call FMS
     % Should these steps be done in here or another file altogether?
     % Store results in .csv 
     tic
-    minSolution = FMS(rot90(meanList), rot90(stdList), rot90(workList), A, workRequired)
+    minSolution = FMS(rot90(meanList), rot90(stdList), rot90(workList), A, workRequired, p)
     toc
 
-    if isempty(minSolution)
+    if isempty(minSolution) % If no solution found, retry with new device stats
         numberOfDevices = numberOfDevices - 2
     end
     %% Call any other algorithms 
 
+    %% Compare Results
+    if isequal(minSolution(1).solution, alg2BestDevices)
+        TotalMatch = TotalMatch + 1
+    end
 end % Repeat loop again with next increment of numberOfDevices
+
 end

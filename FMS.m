@@ -10,10 +10,9 @@ Inputs:
 ~ x (xi): Chosen factor per device (1 = chosen, 2 = unchosen).  The paper refers to this as "vector X". Ex: x[2] = 1 --> device 2 was chosen.
 
 Outputs:
-~ minSolution: The minimum solution to P2 (May change this later to be
-multiple variables in the format of Brute Force output)
+~ minSolution: The minimum solution to P2. Returns [] if not found
 %}
-function minSolution = FMS(means, stdDevs, works, A, W)
+function minSolution = FMS(means, stdDevs, works, A, W, p)
 
 %1: Call Algorithm RSS to get the search range of [0 h] in P3
 [range, X] = RSS(means, stdDevs, works, A, W);
@@ -21,17 +20,37 @@ if isempty(range) || isempty(X)
     minSolution = []
     return
 end
+
+%2: Call Algorithm FEP to obtain all the extreme points in the search range [0 h] in P3
 [ExtPoints] = FEP(means, stdDevs, works, range, X, W);
 if isempty(ExtPoints)
     minSolution = []
     return
 end
-minSolution = ExtPoints; % temp for now so main doesnt error
-
-%2: Call Algorithm FEP to obtain all the extreme points in the search range [0 h] in P3
-
+%minSolution = ExtPoints; % temp for now so main doesnt error
 
 %3: Compare all the X values of the extreme points using the objective
 % function μ + Aσ to get the minimum solution to P2
+
+alg2MinDelay = intmax;
+for i = 1:length(ExtPoints)
+
+    %Run Function with current chosen devices x
+    [minWorkReq, totalMean, totalStd] = P2(means, stdDevs, works, p, W, ExtPoints(i).solution);
+    % This is where the minimization occurs
+    if (minWorkReq) % Don't even try if the minimum work requirement wasn't met
+        tempDelay = totalMean + (A*totalStd);
+        if (tempDelay < alg2MinDelay)
+            alg2MinDelay = tempDelay;
+            minSolution = ExtPoints(i);
+        end
+    end
+end
+
+if isempty(ExtPoints)
+    minSolution = []
+    return
+end        
+
 
 end
