@@ -12,8 +12,8 @@ Inputs:
 
 Outputs:
 ~ deviceList (X): A single array of devices that best matches the inputs.
-Minimizes μ + kσ while also making sure that the minimum work requirement
-W is met. 
+    Minimizes μ + kσ while also making sure that the minimum work requirement
+    W is met. 
 ~ totalMean: Overall average of minimal solution (μ)
 %}
 function [deviceList, totalMean] = P3_2(k, W, u, o, w)

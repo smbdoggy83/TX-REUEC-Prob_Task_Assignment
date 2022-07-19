@@ -1,13 +1,18 @@
-function D = P1(n, W, w, d) 
-
+%{
+%% Outdated function. P1 does not need to be represented by a MatLab file
+%% since no algorithm requires it. 
+%
 %% Represents equation P1
 % Inputs: 
 % ~ n: N edge devices
 % ~ W: Total amount of work needed to meet or exceed. 
 % ~ w (wi): Work accomplished per device. Ex: w[2] = work done by device 2
 % ~ d (di): Network delays per device. Ex: d[2] = network delay for device 2
+
 % Outputs:
 % ~ x (xi): Chosen factor per device (1 = chosen, 2 = unchosen).  The paper refers to this as "vector X". Ex: x[2] = 1 --> device 2 was chosen.
+
+function D = P1(n, W, w, d) 
 
 dist = normpdf([10:1:100], mu, sigma);
 
@@ -36,3 +41,4 @@ end
 D = minimum(Dvals);
 
 end
+%}

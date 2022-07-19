@@ -1,9 +1,11 @@
+%{
+Function for randomly generating Mean, STD, and Work for each device
+This function will write its results to an output file, which will then
+be used as the input file for all of our algorithims.
+The variables declared here are defined within a speicifc set of
+parameters for this program.
+%}
 function [meanList, stdList, workList] = DataGen(dataTable, numberOfDevices)
-% Function for randomly generating Mean, STD, and Work for each device
-% This function will write its results to an output file, which will then
-% be used as the input file for all of our algorithims.
-% The variables declared here are defined within a speicifc set of
-% parameters for this program.
 
 % Parallel Arrays containing information about each device
 % Randomly generated mean from 10 -> 100 for reach deivce(Uniform Distro)

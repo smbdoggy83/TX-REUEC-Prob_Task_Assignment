@@ -27,7 +27,6 @@ if isempty(ExtPoints)
     minSolution = []
     return
 end
-%minSolution = ExtPoints; % temp for now so main doesnt error
 
 %3: Compare all the X values of the extreme points using the objective
 % function μ + Aσ to get the minimum solution to P2
