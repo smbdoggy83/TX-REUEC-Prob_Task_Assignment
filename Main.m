@@ -2,7 +2,7 @@ clear all;
 clc;
 %% Import Data
 TotalMatch = 0;
-for master = 1:3
+for master = 1:100
 dataTable = table;
 % Minimum work requirement defined by user
 workRequired = 500;
@@ -73,7 +73,7 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     %% Call any other algorithms 
 
     %% Compare Results
-    if isequal(minSolution(1).solution, alg2BestDevices)
+    if ~isempty(minSolution) && isequal(minSolution(1).solution, alg2BestDevices)
         TotalMatch = TotalMatch + 1
     end
 end % Repeat loop again with next increment of numberOfDevices
