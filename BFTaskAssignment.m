@@ -1,6 +1,7 @@
-% Brute Force Simulation Task Assignment on Edge Computing, this simulation
-% will serve as a baseline to compare FMS to.
-
+%{
+Brute Force Simulation Task Assignment on Edge Computing, this simulation
+will serve as a baseline to compare FMS to.
+%}
 function [totalMean, A, totalStd] = BFTaskAssignment(meanList, stdList, workList, p, workRequired)
     
     A = sqrt(2) * erfinv(2*p - 1); % Constant
@@ -44,76 +45,3 @@ function [totalMean, A, totalStd] = BFTaskAssignment(meanList, stdList, workList
     disp("**************************************")
 
 end
-%% Old Code 
-%{
-minDelay = intmax;
-
-combos = FindAll(workRequired, workList);
-
-find best delay from all combinations
-for i = 1:numel(combos)
-    for j = 1:numel(combos{i})
-        holder = find(workList == combos{i}(j));
-        delay = delay + min(delayList(holder(1:end)));
-    end
-    if delay(1:end)< min(minDelay)
-        minDelay = delay;
-        position = i;
-    end
-    delay = 0;
-end
-
-for i = 1:length(combos{position})
-indexList(find(workList == combos{position}(i))) = 1;
-end
-
-
-
-items = rand(numberOfDevices, 1);
-for i = 1:length(items)
-    items(i) = i;
-end
-disp("------------- Devices ----------------------------")
-T = table(items, indexList, delayList, workList)
-output = minDelay;
-disp("Min Delay: " + min(output)) % Posiblility of duplicates, take the lower value 
-disp("---------------------------------------------------")
-
-
-
-Trying every combination that meets the 500 work requirment and adding 
-up their assocated delay in "delayList" to find the mininum delay that 
-completes the job.
-
-Passed variables: workRequired (minimum work to be done)
-                  workList (Work each device can complete before dead)
-Returns: Complete list of all possible combinations which meet
-workRequired
-
-function Combinations = FindAll(workRequired, workList)
-    Combinations = {};
-    for i = 1:numel(workList)
-        findCombo(workList(i), workList(i+1:length(workList)))
-    end
-
-    function findCombo(current, rest)
-        if sum(current) < workRequired
-            for j = 1:numel(rest)
-                findCombo([current,rest(j)], rest(j+1:end))
-            end
-        else
-            Combinations{end+1} = current;
-        end
-    end
-end
-
-
-
-
-AllX = dec2bin(0:2^n-1)' - '0'; all possible combinations function to try
-export randomly generated data to use in other Algos
-p = 0.99;
-A = sqrt(2)*erfinv(2*p-1);
-P3 has a built in function to solve
-[x, fval] = intlinprog(R, intcon, A, b, Aeq, beq, lb, ub);
-%}
