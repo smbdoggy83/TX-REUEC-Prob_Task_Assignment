@@ -17,7 +17,7 @@ Outputs:
 ~ ExtPoints: The extreme points, AKA the arrays of devices that are deemed
     most optimal
 %}
-function [ExtPoints] = FEP(mean, std, works, range, X, W)
+function [ExtPoints] = FEP(mean, std, works, range, X, W, searchArgument)
 global cList;
 rangeSet = ([]);
 sigSqr = std.^2; % Square each element for future calculations
@@ -53,7 +53,13 @@ while ~isempty(rangeSet)
        mean2 = sum(mean .* bSet);
 
        % The cross point c
-       c = -1*((mean1 - mean2) / (STD1^2 - STD2^2));
+       %% This is the only difference between the main search method and Binary Search
+       if (searchArgument == "BS")
+           c = (a + b) / 2;
+       else
+           c = -1*((mean1 - mean2) / (STD1^2 - STD2^2));
+       end
+
        if isnan(c)
          ExtPoints = [] 
          return

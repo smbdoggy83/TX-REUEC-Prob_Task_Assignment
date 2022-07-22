@@ -12,7 +12,7 @@ Inputs:
 Outputs:
 ~ minSolution: The minimum solution to P2. Returns [] if not found
 %}
-function minSolution = FMS(means, stdDevs, works, A, W, p)
+function minSolution = FMS(means, stdDevs, works, A, W, p, searchArgument)
 
 %1: Call Algorithm RSS to get the search range of [0 h] in P3
 [range, X] = RSS(means, stdDevs, works, A, W);
@@ -22,7 +22,7 @@ if isempty(range) || isempty(X)
 end
 
 %2: Call Algorithm FEP to obtain all the extreme points in the search range [0 h] in P3
-[ExtPoints] = FEP(means, stdDevs, works, range, X, W);
+[ExtPoints] = FEP(means, stdDevs, works, range, X, W, searchArgument);
 if isempty(ExtPoints)
     minSolution = []
     return

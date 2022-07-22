@@ -68,14 +68,17 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     % Should these steps be done in here or another file altogether?
     % Store results in .csv 
     tic
-    minSolution = FMS(meanList', stdList', workList', A, workRequired, p);
+    minSolution = FMS(meanList', stdList', workList', A, workRequired, p, "");
     toc
 
     if isempty(minSolution) % If no solution found, retry with new device stats
         numberOfDevices = numberOfDevices - 2;
     else
     %% Call any other algorithms 
-
+    tic
+    minSolution_BS = FMS(meanList', stdList', workList', A, workRequired, p, "BS");
+    toc
+    
         %% Compare Results
         if ~isempty(minSolution)
             if isequal(minSolution(1).solution, alg2BestDevices)
