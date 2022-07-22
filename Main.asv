@@ -66,7 +66,7 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     % Should these steps be done in here or another file altogether?
     % Store results in .csv 
     tic
-    minSolution = FMS(meanList', stdList', workList', A, workRequired, p)
+    minSolution = FMS(rot90(meanList), rot90(stdList), rot90(workList), A, workRequired, p)
     toc
 
     if isempty(minSolution) % If no solution found, retry with new device stats
