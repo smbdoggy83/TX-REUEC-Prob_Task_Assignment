@@ -2,12 +2,14 @@ clear all;
 clc;
 %% Import Data
 TotalMatch = 0;
+BSTotalMatch = 0;
 error = ([]);
-testloop = 4;
+errorBS = ([]);
+testloop = 1;
 for master = 1:testloop
 dataTable = table;
 global cList;
-cList = [];
+
 % Minimum work requirement defined by user
 workRequired = 500;
 p = .99; % Probability constant
@@ -16,7 +18,7 @@ A = sqrt(2) * erfinv(2*p - 1); % Constant
 %% Begin Algorithms
 for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     % We will test number of devices from 10 -> 20 in increments of 2
-
+    cList = [];
     [meanList, stdList, workList] = DataGen(dataTable, numberOfDevices);
 
     
@@ -57,7 +59,6 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     disp("**************************************")
     disp("Algorithm: Brute Force using P2")
     disp("Number of Devices: " + numberOfDevices)
-    disp("Min Delay : " + num2str(alg2MinDelay))
     disp("Chosen Set: " + num2str(alg2BestDevices))
     toc
     disp("**************************************")
@@ -69,15 +70,17 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     % Store results in .csv 
     tic
     minSolution = FMS(meanList', stdList', workList', A, workRequired, p, "");
-    toc
-
+   
     if isempty(minSolution) % If no solution found, retry with new device stats
         numberOfDevices = numberOfDevices - 2;
     else
-    %% Call any other algorithms 
-    tic
-    minSolution_BS = FMS(meanList', stdList', workList', A, workRequired, p, "BS");
-    toc
+        disp("**************************************")
+        disp("Algorithm: FMS")
+        disp("Number of Devices: " + numberOfDevices)
+        disp("Chosen Set: " + num2str(minSolution(1).solution))
+        disp("Unique c values: " + length(unique(cList)))
+        toc
+        disp("**************************************")
     
         %% Compare Results
         if ~isempty(minSolution)
@@ -95,8 +98,41 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
             end
         end
     end
-    disp(length(unique(cList)) + " unique c values: ")
-    disp(unique(cList))
+
+        %% Call any other algorithms 
+    cList = []
+    tic
+    minSolution_BS = FMS(meanList', stdList', workList', A, workRequired, p, "BS");
+
+    if isempty(minSolution_BS) % If no solution found, retry with new device stats
+        numberOfDevices = numberOfDevices - 2;
+    else
+        disp("**************************************")
+        disp("Algorithm: BS")
+        disp("Number of Devices: " + numberOfDevices)
+        disp("Chosen Set: " + num2str(minSolution_BS(1).solution))
+        disp("Unique c values: " + length(unique(cList)))
+        toc
+        disp("**************************************")
+    
+        %% Compare Results
+        if ~isempty(minSolution_BS)
+            if isequal(minSolution_BS(1).solution, alg2BestDevices)
+                BSTotalMatch = BSTotalMatch + 1;
+            else
+                [minWorkReq, totalMean, totalStd] = P2(meanList', stdList', workList', p, workRequired, minSolution(1).solution);
+                wrongDelay = totalMean + (A*totalStd);
+                errorBS(end+1).wrong = wrongDelay;
+                errorBS(end).right = alg2MinDelay;
+                errorBS(end).percent = (wrongDelay - alg2MinDelay)/alg2MinDelay;
+                if errorBS(end).percent == 0
+                    BSTotalMatch = BSTotalMatch + 1;
+                end
+            end
+        end
+    end
+    
 end % Repeat loop again with next increment of numberOfDevices
-disp("The match rate is: " + TotalMatch/(6*testloop))
+disp("The FMS match rate is: " + TotalMatch/(6*testloop))
+disp("The BS match rate is: " + BSTotalMatch/(6*testloop))
 end

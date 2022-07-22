@@ -33,7 +33,7 @@ if std < .000001
 end
 count = 1;
 while (abs(k*std - A) > .001) %while (k*std ~= A) 
-    disp("Loop #" + count + ": k * std is " + (k*std) + ", A is " + A);
+%    disp("Loop #" + count + ": k * std is " + (k*std) + ", A is " + A);
     
     k = A / std;
 
@@ -50,7 +50,7 @@ end
     count = count + 1;
 end
 
-disp("Done after " + (count-1) + " loops. Final k * std was " + (k*std) + ", A is " + A);
+%disp("Done after " + (count-1) + " loops. Final k * std was " + (k*std) + ", A is " + A);
 
 h = k;
 
