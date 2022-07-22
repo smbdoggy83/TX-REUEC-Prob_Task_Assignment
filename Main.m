@@ -3,9 +3,11 @@ clc;
 %% Import Data
 TotalMatch = 0;
 error = ([]);
-testloop = 120;
+testloop = 4;
 for master = 1:testloop
 dataTable = table;
+global cList;
+cList = [];
 % Minimum work requirement defined by user
 workRequired = 500;
 p = .99; % Probability constant
@@ -66,7 +68,7 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     % Should these steps be done in here or another file altogether?
     % Store results in .csv 
     tic
-    minSolution = FMS(meanList', stdList', workList', A, workRequired, p)
+    minSolution = FMS(meanList', stdList', workList', A, workRequired, p);
     toc
 
     if isempty(minSolution) % If no solution found, retry with new device stats
@@ -90,7 +92,8 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
             end
         end
     end
+    disp(length(unique(cList)) + " unique c values: ")
+    disp(unique(cList))
 end % Repeat loop again with next increment of numberOfDevices
-disp(error)
-disp(TotalMatch/(6*testloop))
+disp("The match rate is: " + TotalMatch/(6*testloop))
 end

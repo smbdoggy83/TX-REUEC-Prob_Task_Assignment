@@ -18,7 +18,7 @@ Outputs:
     most optimal
 %}
 function [ExtPoints] = FEP(mean, std, works, range, X, W)
-
+global cList;
 rangeSet = ([]);
 sigSqr = std.^2; % Square each element for future calculations
 
@@ -53,12 +53,13 @@ while ~isempty(rangeSet)
        mean2 = sum(mean .* bSet);
 
        % The cross point c
-       c = -1*((mean1 - mean2) / (STD1^2 - STD2^2))
+       c = -1*((mean1 - mean2) / (STD1^2 - STD2^2));
        if isnan(c)
          ExtPoints = [] 
          return
        end
        if c ~= a && c ~= b
+           cList(end+1) = c;
            [Xc, ~] = P3_2(c, W, mean, std, works);
            Xc = round(Xc');
            if isequal(Xc, aSet) && ~isequal(Xc, bSet)
@@ -81,5 +82,6 @@ while ~isempty(rangeSet)
 
            end
        end
+
     end
 end
