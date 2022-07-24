@@ -6,9 +6,12 @@ BSTotalMatch = 0;
 error = ([]);
 errorBS = ([]);
 testloop = 1;
+cListAmts = zeros(3, 6 * testloop);
+iterations = 1; % Tracks amount of times loop has run (can't do that currently since numberOfDevices could be any range). Used for cListAmts
+
 for master = 1:testloop
-dataTable = table;
-global cList;
+    dataTable = table;
+    global cList;
 
 % Minimum work requirement defined by user
 workRequired = 500;
@@ -63,10 +66,9 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
     toc
     disp("**************************************")
     
-    
+    cListAmts(1, iterations) = ((2^numberOfDevices)-1)
     
     %% Call FMS
-    % Should these steps be done in here or another file altogether?
     % Store results in .csv 
     tic
     minSolution = FMS(meanList', stdList', workList', A, workRequired, p, "");
@@ -82,6 +84,8 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
         toc
         disp("**************************************")
     
+        cListAmts(2, iterations) = length(cList);
+
         %% Compare Results
         if ~isempty(minSolution)
             if isequal(minSolution(1).solution, alg2BestDevices)
@@ -99,7 +103,7 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
         end
     end
 
-        %% Call any other algorithms 
+    %% Call any other algorithms 
     cList = []
     tic
     minSolution_BS = FMS(meanList', stdList', workList', A, workRequired, p, "BS");
@@ -115,6 +119,8 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
         toc
         disp("**************************************")
     
+        cListAmts(3, iterations) = length(cList);
+
         %% Compare Results
         if ~isempty(minSolution_BS)
             if isequal(minSolution_BS(1).solution, alg2BestDevices)
@@ -131,8 +137,15 @@ for numberOfDevices = 10:2:20 % Should be 6 times, file10 - file20
             end
         end
     end
-    
+ 
+iterations = iterations + 1;
+
 end % Repeat loop again with next increment of numberOfDevices
-disp("The FMS match rate is: " + TotalMatch/(6*testloop))
-disp("The BS match rate is: " + BSTotalMatch/(6*testloop))
+FMS_matchRate = TotalMatch/(6*testloop);
+BS_matchRate = BSTotalMatch/(6*testloop);
+disp("The FMS match rate is: " + FMS_matchRate)
+disp("The BS match rate is: " + BS_matchRate)
+
+displayResults(FMS_matchRate, BS_matchRate, errorBS, cListAmts)
+
 end
